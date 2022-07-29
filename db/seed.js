@@ -88,15 +88,17 @@ async function createInitialPosts() {
 		});
 		await createPost({
 			authorId: sandra.id,
-			title: "First Post",
-			content: "This is my first post. I hope I love reading blogs as much as I love writing them."
+			title: "How does this work?",
+			content: "Seriously, does this even do anything."
 		});
 		await createPost({
 			authorId: glamgal.id,
-			title: "First Post",
-			content: "This is my first post. I hate blogs."
+			title: "Living the Glam Life",
+			content: "Do you even? I swear that half of you are posing."
 		});
+		console.log("Finished creating posts!");
 	} catch (error) {
+		console.log("Error creating posts!");
 		throw error;
 	}
 }

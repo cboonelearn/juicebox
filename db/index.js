@@ -67,7 +67,6 @@ async function createPost({
 		const { rows: [ post ] } = await client.query(`
 			INSERT INTO posts("authorId", title, content)
 			VALUES ($1, $2, $3)
-			ON CONFLICT ("id") DO NOTHING
 			RETURNING *;
 		`, [ authorId, title, content ]);
 
@@ -77,11 +76,7 @@ async function createPost({
 	}
 }
 
-async function updatePost(id, fields = {
-	title,
-	content,
-	active
-}) {
+async function updatePost(id, fields = {}) {
 	const setString = Object.keys(fields).map(
 		(key, index) => `"${ key }"=$${ index + 1 }`
 	).join(', ');
