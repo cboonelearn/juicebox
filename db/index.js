@@ -102,7 +102,7 @@ async function updatePost(id, fields = {}) {
 async function getAllPosts() {
 	try {
 		const { rows } = await client.query(
-			`SELECT id, "authorId", title, content, active
+			`SELECT *
 			FROM posts;
 		`);
 	
@@ -127,19 +127,19 @@ async function getPostsByUser(userId) {
 
 async function getUserById(userId) {
 	try {
-		const { rows } = await client.query(`
-			SELECT * FROM users
-			WHERE "id"=${ userId };
+		const { rows: [ user ] } = await client.query(`
+			SELECT id, username, name, location, active 
+			FROM users
+			WHERE id=${ userId };
 		`);
 
-		if(!rows.length) {
+		if(!user) {
 			return null;
-		} else {
-			delete rows[0].password
-			const posts = await getPostsByUser(userId)
-			rows[0].posts = posts
-			return rows[0];
-		}
+		}   
+		
+		user.posts = await getPostsByUser(userId)
+
+		return user;
 	} catch (error) {
 		throw error;
 	}
