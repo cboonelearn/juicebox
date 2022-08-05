@@ -2,6 +2,7 @@ const express = require('express');
 const usersRouter = express.Router();
 const { getAllUsers, getUserByUsername, createUser } = require('../db');
 
+// Replaced this with apiRouter.use(express.json()) in /api/index.js
 // usersRouter.use(express.json());
 
 usersRouter.use((req, res, next) => {
@@ -18,6 +19,7 @@ usersRouter.get('/', async (req, res, next) => {
     });
 });
 
+// Replaced this with the route below
 // usersRouter.post('/login', async (req, res, next) => {
 //     console.log(req.body);
 //     res.end();
